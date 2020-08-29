@@ -1,21 +1,22 @@
 // based css:
 // https://github.com/shimmerproject/Greybird/blob/master/gtk-3.0/_xfce.scss
 
-/**************
- * Xfce4 Apps *
- **************/
+/**
+ * Xfce4 Apps
+ */
+
 .XfceHeading {
   background-color: $base;
 }
 
+/**
+ * xfce4-panel
+ */
 
-/***************
- * xfce4-panel *
- ***************/
 .xfce4-panel.background {
   border: none; // Sadly the border is hard-coded
   background-color: $panel;
-  color: on($panel, text2);
+  color: hint($on-panel);
   font-weight: 500;
 
   button {
@@ -23,62 +24,90 @@
     min-width: 16px;
     padding: 0;
     border-radius: 0;
+    background-color: transparent;
+    color: hint($on-panel);
+    @include ink-color($on-panel);
 
-    @include ink-color(on($panel, text2));
-
-    &:disabled { color: on($panel, text2-disabled); }
+    &:disabled {
+      color: disabled-hint($on-panel);
+    }
 
     &:checked {
-      color: on(dark);
+      background-color: overlay("activated", $on-panel);
+      color: $on-panel;
+      @include ink-color($on-panel);
 
-      &:disabled { color: on(dark, text-disabled); }
+      &:disabled {
+        color: disabled($on-panel);
+      }
     }
   }
 
   .tasklist button {
     border-image: image(transparent) 0 0 2 / 0 0 2px;
 
-    &:checked { border-image: image(currentColor) 0 0 2 / 0 0 2px; }
+    &:checked {
+      border-image: image(currentcolor) 0 0 2 / 0 0 2px;
+    }
 
-    image { padding: 4px; }
+    image {
+      padding: 4px;
+    }
   }
 
-  // &.horizontal .tasklist button { margin: 0 1px; }
+  &.horizontal .tasklist button {
+    // margin: 0 1px;
+  }
 
-  // &.vertical .tasklist button { margin: 1px 0; }
+  &.vertical .tasklist button {
+    // margin: 1px 0;
+  }
 
-  frame > border { border-style: none; }
+  frame > border {
+    border-style: none;
+  }
 
   progressbar {
-    progress { background-color: on($panel, primary); }
+    progress {
+      background-color: primary($on-panel);
+    }
 
-    trough { background-color: on($panel, stroke-disabled); }
+    trough {
+      background-color: disabled-stroke($on-panel);
+    }
   }
 }
 
 // Workspace switcher provided by libwnck
 wnck-pager {
-  &:hover { background-color: $overlay-hover; }
+  &:hover {
+    background-color: overlay("hover", $on-panel);
+  }
 
-  &:active { background-color: $overlay-active; }
+  &:active {
+    background-color: overlay("pressed", $on-panel);
+  }
 
-  &:selected { background-color: $primary; }
+  &:selected {
+    background-color: $primary;
+  }
 }
 
 XfdesktopIconView.view {
   border-radius: $corner-radius;
   background-color: transparent;
-  color: on(dark);
+  color: $on-dark;
   text-shadow: $text-shadow;
 
   // XfdesktopIconView uses :active instead of :selected for selection
   &:active {
-    @extend %selected_items;
-
     box-shadow: none;
+    background-color: $overlay-selected;
   }
 
-  // .label { text-shadow: $text-shadow; }
+  .label {
+    // text-shadow: $text-shadow;
+  }
 
   .rubberband {
     @extend rubberband;
@@ -91,13 +120,19 @@ XfdesktopIconView.view {
   border-radius: $corner-radius;
   box-shadow: $shadow-z4, inset 0 1px highlight($surface);
   background-color: $surface;
+  color: $on-surface;
 
-  buttonbox button:not(:disabled) { @include ink-color($primary); }
+  buttonbox button:not(:disabled) {
+    color: $primary;
+    @include ink-color($primary);
+  }
 
   label#summary {
     font-weight: bold;
 
-    + label { color: $text2; }
+    + label {
+      color: hint($on-surface);
+    }
   }
 
   progressbar {
@@ -122,13 +157,13 @@ XfdesktopIconView.view {
   }
 }
 
+/**
+ * Thunar
+ */
 
-/**********
- * Thunar *
- **********/
 .thunar {
   #location-toolbar {
-    border-bottom: 1px solid $divider;
+    border-bottom: 1px solid divider($on-surface);
 
     // FIXME: This has no .image-button style class :(
     > toolitem > button {
@@ -139,13 +174,17 @@ XfdesktopIconView.view {
   }
 
   .shortcuts-pane.frame,
-  .standard-view.frame { border-style: none; }
+  .standard-view.frame {
+    border-width: 0;
+  }
 
-  .sidebar .view:not(:selected) { background-color: transparent; }
+  .sidebar .view:not(:selected) {
+    background-color: transparent;
+  }
 
   statusbar {
     margin: 0 -10px;
     padding: 0 4px;
-    border-top: 1px solid $divider;
+    border-top: 1px solid divider($on-surface);
   }
 }

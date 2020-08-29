@@ -1,9 +1,10 @@
 // based css:
 // https://bazaar.launchpad.net/~ubuntu-art-pkg/ubuntu-themes/trunk/view/head:/Ambiance/gtk-3.20/apps/unity.css
 
-/*********
- * Unity *
- *********/
+/**
+ * Unity
+ */
+
 // Decorations
 UnityDecoration {
   -UnityDecoration-extents: 28px 0 0 0;
@@ -11,9 +12,9 @@ UnityDecoration {
 
   -UnityDecoration-shadow-offset-x: 0;
   -UnityDecoration-shadow-offset-y: 3px;
-  -UnityDecoration-active-shadow-color: rgba(black, 0.48);
+  -UnityDecoration-active-shadow-color: rgba(black, .48);
   -UnityDecoration-active-shadow-radius: 18px;
-  -UnityDecoration-inactive-shadow-color: rgba(black, 0.32);
+  -UnityDecoration-inactive-shadow-color: rgba(black, .32);
   -UnityDecoration-inactive-shadow-radius: 6px;
 
   -UnityDecoration-glow-size: 8px;
@@ -29,27 +30,29 @@ UnityDecoration {
     border-radius: $corner-radius $corner-radius 0 0;
     box-shadow: inset 0 1px highlight($titlebar);
     background-color: $titlebar;
-    color: $titlebar-text;
+    color: $on-titlebar;
 
     &:backdrop {
       background-color: $titlebar-backdrop;
-      color: $titlebar-text2;
+      color: hint($on-titlebar);
     }
   }
 
   .left,
-  .right {}
+  .right {
+  }
 
-  .bottom {}
+  .bottom {
+  }
 
   .menuitem {
     border-radius: $corner-radius $corner-radius 0 0;
     box-shadow: none; // Don't inherit from .top
-    color: $titlebar-text2;
+    color: hint($on-titlebar);
 
     &:hover {
-      background-color: $overlay-checked;
-      color: $titlebar-text;
+      background-color: overlay("activated", $on-titlebar);
+      color: $on-titlebar;
     }
   }
 }
@@ -58,7 +61,9 @@ UnityDecoration {
   border-radius: 0;
   box-shadow: $shadow-z1;
 
-  &.inline-toolbar { border-style: none; }
+  &.inline-toolbar {
+    border-style: none;
+  }
 }
 
 sheet-style-dialog.unity-force-quit {
@@ -69,9 +74,11 @@ sheet-style-dialog.unity-force-quit {
 UnityPanelWidget,
 .unity-panel {
   background-color: $panel-solid;
-  color: $titlebar-text;
+  color: $on-panel-solid;
 
-  &:backdrop { color: $titlebar-text2; }
+  &:backdrop {
+    color: hint($on-panel-solid);
+  }
 }
 
 .unity-panel.menubar,
@@ -80,13 +87,13 @@ UnityPanelWidget,
 
 .unity-panel.menuitem,
 .unity-panel .menuitem {
-  color: $titlebar-text2;
+  color: hint($on-panel-solid);
 }
 
 .unity-panel.menubar.menuitem:hover,
 .unity-panel.menubar .menuitem *:hover {
-  background-color: $overlay-checked;
-  color: $titlebar-text;
+  background-color: overlay("activated", $on-panel-solid);
+  color: $on-panel-solid;
 }
 
 .menu IdoPlaybackMenuItem.menuitem:active {

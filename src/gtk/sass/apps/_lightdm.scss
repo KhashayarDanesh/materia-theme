@@ -1,31 +1,41 @@
 // based css:
 // https://bazaar.launchpad.net/~lightdm-gtk-greeter-team/lightdm-gtk-greeter/trunk/view/head:/data/sample-lightdm-gtk-greeter.css
 
-/************************
- * LightDM GTK+ Greeter *
- ************************/
+/**
+ * LightDM GTK+ Greeter
+ */
+
 // the panel widget at the top
 #panel_window {
   background-color: $scrim-alt;
-  color: on($scrim-alt);
+  color: $on-scrim-alt;
   // font-weight: bold;
 
   // the menubars/menus of the panel, i.e. indicators
   menubar,
-  separator { background-color: transparent; }
+  separator {
+    background-color: transparent;
+  }
 
   separator {
     padding: 0 4px;
 
-    &:first-child { padding: 0 8px; }
+    &:first-child {
+      padding: 0 8px;
+    }
   }
 
   menubar > menuitem {
-    color: on($scrim-alt, text2);
+    color: hint($on-scrim-alt);
 
-    &:hover { color: on($scrim-alt); }
+    &:hover {
+      background-color: overlay("activated", $on-scrim-alt);
+      color: $on-scrim-alt;
+    }
 
-    &:disabled { color: on($scrim-alt, text2-disabled); }
+    &:disabled {
+      color: disabled-hint($on-scrim-alt);
+    }
   }
 }
 
@@ -37,6 +47,7 @@
   border-radius: $corner-radius;
   box-shadow: $shadow-z6, inset 0 1px highlight($surface);
   background-color: $surface;
+  color: $on-surface;
 }
 
 // the top half of the login-window, in GtkDialog terms, the content
@@ -46,10 +57,12 @@
 
 #login_window {
   // the user-combobox
-  #user_combobox button {}
+  #user_combobox button {
+  }
 
   // the entries, one for the username, one for the password
-  entry {}
+  entry {
+  }
 }
 
 // the buttons, alternatively this could also be done with a simple ".lightdm-gtk-greeter button"
@@ -74,12 +87,17 @@
   padding-top: 24px;
 
   > box,
-  > buttonbox { margin: -16px; }
+  > buttonbox {
+    margin: -16px;
+  }
 
   button {
     @extend %button-flat;
 
-    &:not(:disabled) { @include ink-color($primary); }
+    &:not(:disabled) {
+      color: $primary;
+      @include ink-color($primary);
+    }
   }
 }
 

@@ -1,6 +1,7 @@
-/************
- * Nautilus *
- ************/
+/**
+ * Nautilus
+ */
+
 // based css:
 // https://gitlab.gnome.org/GNOME/nautilus/blob/master/src/resources/css/Adwaita.css
 // hard-coded css:
@@ -18,7 +19,7 @@
 
 .nautilus-canvas-item.dim-label,
 .nautilus-list-dim-label {
-  color: $text2;
+  color: hint($on-surface);
 }
 
 .nautilus-desktop.nautilus-canvas-item {
@@ -29,7 +30,7 @@
 
 @keyframes nautilus-operations-button-needs-attention {
   to {
-    background-color: $overlay-focus;
+    background-color: overlay("focus", $on-titlebar);
   }
 }
 
@@ -52,22 +53,31 @@
   margin: $container-padding 0;
   border-radius: $corner-radius;
 
-  button { margin: 0; } // reset the margin
+  // reset the margin
+  button {
+    margin: 0;
+  }
 
-  &.width-maximized { background-color: $titlebar-entry-fill; }
+  &.width-maximized {
+    background-color: entry-fill($on-titlebar);
+  }
 
   // workaround for 3.30.1
   &.background.frame {
     border-style: none;
-    background-color: $titlebar-entry-fill;
+    background-color: entry-fill($on-titlebar);
   }
 
   // for 3.30
   .path-bar button {
     label:not(:only-child) {
-      &:first-child { margin-left: 0; }
+      &:first-child {
+        margin-left: 0;
+      }
 
-      &:last-child { margin-right: 0; }
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 
@@ -76,18 +86,28 @@
     padding-left: ($medium-size - 24px) / 2;
     padding-right: ($medium-size - 24px) / 2;
 
-    &.text-button { min-width: 0; }
-
-    label:not(:only-child) {
-      &:first-child { margin-left: 0; }
-
-      &:last-child { margin-right: 0; }
+    &.text-button {
+      min-width: 0;
     }
 
-    &.text-button.image-button image:not(:only-child) { margin: 0; }
+    label:not(:only-child) {
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &.text-button.image-button image:not(:only-child) {
+      margin: 0;
+    }
 
     &:last-child:dir(ltr),
-    &:first-child:dir(rtl) { @extend %titlebar-button-checked; }
+    &:first-child:dir(rtl) {
+      @extend %titlebar-button-checked;
+    }
   }
 }
 
@@ -97,17 +117,19 @@
   padding: 0;
   border-style: solid solid none;
   border-width: 1px;
-  border-color: $divider;
+  border-color: divider($on-surface);
   border-radius: ($corner-radius + 1px) ($corner-radius + 1px) 0 0;
-  background-color: rgba($surface, 0.9);
+  background-color: $surface;
 
-  &.bottom.left { // axes left border and border radius
+  // axes left border and border radius
+  &.bottom.left {
     margin-right: 8px - 1px;
     border-left-style: none;
     border-top-left-radius: 0;
   }
 
-  &.bottom.right { // axes right border and border radius
+  // axes right border and border radius
+  &.bottom.right {
     margin-left: 8px - 1px;
     border-right-style: none;
     border-top-right-radius: 0;
@@ -125,8 +147,8 @@
   // border-width: 2px;
 
   &.unknown {
-    background-color: $stroke;
-    color: $stroke;
+    background-color: stroke($on-surface);
+    color: stroke($on-surface);
   }
 
   &.used {
@@ -135,33 +157,37 @@
   }
 
   &.free {
-    background-color: $fill;
-    color: $fill;
+    background-color: fill($on-surface);
+    color: fill($on-surface);
   }
 }
 
 // View
 // Hide superfluous treeview drop target indication
 .nautilus-list-view .view:not(.dnd) {
-  // border-bottom: 1px solid $divider;
+  // border-bottom: 1px solid divider($on-surface);
 }
 
 .search-information {
   padding: 2px;
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   background-color: $base;
-  color: $text;
+  color: $on-surface;
 }
 
 .documents-entry-tag {
   @extend .entry-tag;
 }
 
-.conflict-row:not(:selected) { background-color: mix($warning, $base, percentage(0.3)); }
+.conflict-row:not(:selected) {
+  background-color: mix($warning, $base, percentage(.3));
+}
 
 // Icon view
 .nautilus-window flowboxchild {
-  // .icon-background { background-color: black; }
+  .icon-background {
+    // background-color: black;
+  }
 
   .icon-item-background {
     padding: 4px;
@@ -171,21 +197,29 @@
   &:selected {
     background-color: transparent;
 
-    .icon-item-background { @extend %selected_items; }
+    .icon-item-background {
+      background-color: $overlay-selected;
+    }
   }
 }
 
 // Batch rename dialog
 dialog.background > box.dialog-vbox.vertical > grid.horizontal {
-  > scrolledwindow.frame { border-style: none; }
+  > scrolledwindow.frame {
+    border-style: none;
+  }
 
   > box.horizontal:last-child {
     margin: -6px 0 0 -6px;
-    border-top: 1px solid $divider;
+    border-top: 1px solid divider($on-surface);
 
-    > label { margin: 0 8px; }
+    > label {
+      margin: 0 8px;
+    }
 
-    > box > button { border-radius: 0; }
+    > box > button {
+      border-radius: 0;
+    }
   }
 }
 
@@ -199,11 +233,15 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
     > box {
       margin-bottom: -6px;
 
-      &.linked { margin-top: 1px; }
+      &.linked {
+        margin-top: 1px;
+      }
     }
   }
 
-  separator { margin-bottom: -2px; }
+  separator {
+    margin-bottom: -2px;
+  }
 }
 
 .nautilus-menu-sort-heading {
@@ -213,19 +251,26 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
   margin: 1px 3px;
   font-weight: 500;
 
-  &:disabled { color: $text2; }
+  &:disabled {
+    color: hint($on-surface);
+  }
 }
 
 // Make operations button circular
-.nautilus-window headerbar revealer > button { border-radius: $circular-radius; }
+.nautilus-window headerbar revealer > button {
+  border-radius: $circular-radius;
+}
 
 // Ensure paned separator rendering. See issue #84 for details.
-.nautilus-window paned > separator { background-color: $base-alt; }
+.nautilus-window paned > separator {
+  background-color: $base-alt;
+}
 
 
-/*********
- * gedit *
- *********/
+/**
+ * gedit
+ */
+
 // based css:
 // https://gitlab.gnome.org/GNOME/gedit/blob/master/gedit/resources/css/gedit.adwaita.css
 // hard-coded css:
@@ -238,14 +283,14 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
 
 // Only normal state is handle
 .open-document-selector-path-label {
-  color: $text2;
+  color: hint($on-surface);
   font-size: smaller;
 }
 
 // Only normal state is handle
 .open-document-selector-match {
   background-color: $warning;
-  color: on($warning);
+  color: $on-warning;
 }
 
 .gedit-document-panel {
@@ -261,11 +306,11 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
 }
 
 .gedit-document-panel-group-row:not(:first-child) {
-  border-top: 1px solid $divider;
+  border-top: 1px solid divider($on-surface);
 }
 
 .gedit-side-panel-paned statusbar {
-  border-top: 1px solid $divider;
+  border-top: 1px solid divider($on-surface);
 }
 
 .gedit-search-slider {
@@ -277,7 +322,7 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
 
     .gedit-search-entry-occurrences-tag {
       all: unset;
-      color: $text2;
+      color: hint($on-surface);
     }
 
     $buttons_width: $small-size * 2 + $container-padding * 3;
@@ -286,26 +331,39 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
       margin-right: -$buttons_width;
       padding-right: $buttons_width;
 
-      .gedit-search-entry-occurrences-tag { margin-left: $container-padding; }
+      .gedit-search-entry-occurrences-tag {
+        margin-left: $container-padding;
+      }
 
-      image.right { margin-right: 0; }
+      image.right {
+        margin-right: 0;
+      }
     }
 
     &:dir(rtl) {
       margin-left: -$buttons_width;
       padding-left: $buttons_width;
 
-      .gedit-search-entry-occurrences-tag { margin-right: $container-padding; }
+      .gedit-search-entry-occurrences-tag {
+        margin-right: $container-padding;
+      }
 
-      image.left { margin-left: 0; }
+      image.left {
+        margin-left: 0;
+      }
     }
 
-    &:not(.error) { background-color: $surface; }
+    &:not(.error) {
+      background-color: $surface;
+    }
 
     &.error ~ button {
-      @include ink-color(on($error, text2));
+      color: hint($on-error);
+      @include ink-color($on-error);
 
-      &:disabled { color: on($error, text2-disabled); }
+      &:disabled {
+        color: disabled-hint($on-error);
+      }
     }
   }
 
@@ -317,22 +375,31 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
     @extend %button-small;
 
     &:last-child:dir(ltr),
-    &:not(:first-child):dir(rtl) { margin-left: -$container-padding / 2; }
+    &:not(:first-child):dir(rtl) {
+      margin-left: -$container-padding / 2;
+    }
 
     &:first-child:dir(rtl),
-    &:not(:last-child):dir(ltr) { margin-right: -$container-padding / 2; }
+    &:not(:last-child):dir(ltr) {
+      margin-right: -$container-padding / 2;
+    }
   }
 }
 
 frame.gedit-map-frame > border {
-  &:dir(ltr) { border-style: none none none solid; }
-  &:dir(rtl) { border-style: none solid none none; }
+  &:dir(ltr) {
+    border-style: none none none solid;
+  }
+
+  &:dir(rtl) {
+    border-style: none solid none none;
+  }
 }
 
+/**
+ * Tweaks
+ */
 
-/**********
- * Tweaks *
- **********/
 // hard-coded css:
 // https://gitlab.gnome.org/GNOME/gnome-tweaks/blob/master/data/shell.css
 
@@ -342,14 +409,18 @@ frame.gedit-map-frame > border {
   // background-color: shade(@theme_bg_color, 0.99);
   background-image: image($base-alt);
 
-  separator { @extend %hide_separators; }
+  separator {
+    @extend %hide_separators;
+  }
 }
 
 .tweak {
   // padding-top: 3px;
   padding: 3px;
 
-  &.title:hover { box-shadow: none; }
+  &.title:hover {
+    box-shadow: none;
+  }
 }
 
 .tweak-group-white,
@@ -368,7 +439,7 @@ frame.gedit-map-frame > border {
 .tweak-group-startup {
   // background-color: @view_separators;
   background-image: image($base);
-  border: 1px solid $divider;
+  border: 1px solid divider($on-surface);
 }
 
 //
@@ -382,11 +453,15 @@ row#dynamic-workspaces,
 row#PrimaryWorkspaceTweak, // for 3.26.0
 row#workspaces-only-on-primary {
   padding: 0;
-  border: 1px solid $divider;
+  border: 1px solid divider($on-surface);
 
-  row:not(:last-child) { border-bottom: 1px solid $divider; }
+  row:not(:last-child) {
+    border-bottom: 1px solid divider($on-surface);
+  }
 
-  &.tweak > list { margin-top: -3px; }
+  &.tweak > list {
+    margin-top: -3px;
+  }
 }
 
 // Add more spaces between title and list
@@ -409,14 +484,14 @@ hdyleaflet.titlebar > .titlebar.tweak-titlebar-right {
 
   + separator {
     background-color: inherit;
-    background-image: image($titlebar-divider);
+    background-image: image(divider($on-titlebar));
   }
 }
 
+/**
+ * Builder
+ */
 
-/***********
- * Builder *
- ***********/
 // based css for 3.22:
 // https://gitlab.gnome.org/GNOME/gnome-builder/tree/gnome-builder-3-22/data/theme
 // based css for 3.24:
@@ -427,10 +502,12 @@ hdyleaflet.titlebar > .titlebar.tweak-titlebar-right {
 // Layout tab and tab bar tweaks
 // The following makes the layout stack header look similar to a tab bar.
 layouttabbar {
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   background-color: $background;
 
-  button { @extend %button-flat-activatable; }
+  button {
+    @extend %button-flat-activatable;
+  }
 
   > box > button {
     margin: (40px - $medium-size) / 2 0;
@@ -442,14 +519,18 @@ layouttab {
   margin: 0 8px; // not working
   border-style: none solid;
   border-width: 1px;
-  border-color: $divider;
+  border-color: divider($on-surface);
   box-shadow: inset 0 -2px $primary;
   background-color: $base;
 
-  separator.vertical { margin: 8px 4px; }
+  separator.vertical {
+    margin: 8px 4px;
+  }
 
   button {
-    &.text-button, &.image-button, & {
+    &,
+    &.text-button,
+    &.image-button {
       margin-top: 8px;
       margin-bottom: 8px;
       padding: 0 4px;
@@ -457,22 +538,24 @@ layouttab {
   }
 
   // Close button styling for layouttab.
-  // > box > button.close { border-radius: $circular-radius; }
+  > box > button.close {
+    // border-radius: $circular-radius;
+  }
 }
 
 layout {
-  border: 1px solid $divider;
+  border: 1px solid divider($on-surface);
   -PnlDockBin-handle-size: 1;
 }
 
 entry.search-missing {
   background-color: $error;
-  color: on($error);
+  color: $on-error;
 }
 
 // tweak icons for treeviews
 window.workbench treeview.image {
-  color: $text2;
+  color: hint($on-surface);
 }
 
 popover.popover-selector list {
@@ -482,95 +565,139 @@ popover.popover-selector list {
     border-radius: $corner-radius;
 
     image {
-      &:dir(ltr) { margin-right: 6px; }
-      &:dir(rtl) { margin-left: 6px; }
+      &:dir(ltr) {
+        margin-right: 6px;
+      }
+
+      &:dir(rtl) {
+        margin-left: 6px;
+      }
     }
 
     .accel {
-      &:dir(ltr) { margin-left: 6px; }
-      &:dir(rtl) { margin-right: 6px; }
+      &:dir(ltr) {
+        margin-left: 6px;
+      }
+
+      &:dir(rtl) {
+        margin-right: 6px;
+      }
     }
   }
 }
 
 omnibar {
-  &.linked:not(.vertical) entry { border-radius: $corner-radius; }
+  &.linked:not(.vertical) entry {
+    border-radius: $corner-radius;
+  }
 
-  entry { color: $text2; }
+  entry {
+    color: hint($on-surface);
+  }
 }
 
 popover.omnibar list row:not(:last-child) {
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
 }
 
 entry.preferences-search {
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   box-shadow: none;
   background-color: $base;
 
   // doesn't work properly
-  // &:dir(ltr) { border-right: 1px solid $divider; }
-  // &:dir(rtl) { border-left: 1px solid $divider; }
+  &:dir(ltr) {
+    // border-right: 1px solid divider($on-surface);
+  }
+
+  &:dir(rtl) {
+    // border-left: 1px solid divider($on-surface);
+  }
 }
 
 preferences stacksidebar.sidebar {
-  list { background-color: $base-alt; }
+  list {
+    background-color: $base-alt;
+  }
 
   &:dir(ltr),
-  &:dir(rtl) { list { border-style: none; }}
+  &:dir(rtl) {
+    list {
+      border-style: none;
+    }
+  }
 
-  list separator { @extend %hide_separators; }
+  list separator {
+    @extend %hide_separators;
+  }
 }
 
 preferences > box > box {
-  &:dir(ltr) { border-right: 1px solid $divider; }
-  &:dir(rtl) { border-left: 1px solid $divider; }
+  &:dir(ltr) {
+    border-right: 1px solid divider($on-surface);
+  }
+
+  &:dir(rtl) {
+    border-left: 1px solid divider($on-surface);
+  }
 }
 
 popover.messagepopover {
-  &.background { padding: 0; }
+  &.background {
+    padding: 0;
+  }
 
   .popover-action-area button {
     @extend %button-flat-basic;
 
     padding: 8px 16px;
-    border-top: 1px solid $divider;
+    border-top: 1px solid divider($on-surface);
     border-radius: 0;
 
-    &:first-child { border-bottom-left-radius: $corner-radius; }
+    &:first-child {
+      border-bottom-left-radius: $corner-radius;
+    }
 
-    &:last-child { border-bottom-right-radius: $corner-radius; }
+    &:last-child {
+      border-bottom-right-radius: $corner-radius;
+    }
   }
 
-  .popover-content-area { margin: 16px; }
+  .popover-content-area {
+    margin: 16px;
+  }
 }
 
 popover.transfers list {
   background-color: transparent;
 
-  row:not(:first-child) { border-top: 1px solid $divider; }
+  row:not(:first-child) {
+    border-top: 1px solid divider($on-surface);
+  }
 
-  row > box { padding: 10px; }
+  row > box {
+    padding: 10px;
+  }
 }
 
 dockbin {
-  border: 1px solid $divider;
+  border: 1px solid divider($on-surface);
   -PnlDockBin-handle-size: 1;
 }
 
 dockpaned {
-  border: 1px solid $divider;
+  border: 1px solid divider($on-surface);
 }
 
 eggsearchbar box.search-bar {
   padding: 0 8px;
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   background-color: $background;
 }
 
 docktabstrip {
   padding: 0 8px;
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   background-color: $background;
 }
 
@@ -592,11 +719,11 @@ docktab {
   background-position: center;
   background-size: 0% 0%;
 
-  color: $text2;
+  color: hint($on-surface);
   font-weight: 500;
 
   &:hover {
-    background-color: $overlay-hover;
+    background-color: overlay("hover", $on-surface);
   }
 
   &:checked {
@@ -607,7 +734,7 @@ docktab {
     background-color: transparent;
     background-image: radial-gradient(circle, transparent 10%, transparent 0%);
     background-size: 1000% 1000%;
-    color: $text;
+    color: $on-surface;
   }
 }
 
@@ -619,9 +746,13 @@ dockoverlayedge {
     border: none;
   }
 
-  &.left-edge docktab:checked { box-shadow: inset -2px 0 $primary; }
+  &.left-edge docktab:checked {
+    box-shadow: inset -2px 0 $primary;
+  }
 
-  &.right-edge docktab:checked { box-shadow: inset 2px 0 $primary; }
+  &.right-edge docktab:checked {
+    box-shadow: inset 2px 0 $primary;
+  }
 }
 
 pillbox {
@@ -634,7 +765,7 @@ buildperspective row {
 }
 
 layoutpane entry.search {
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   box-shadow: none;
   background-color: $base;
 }
@@ -685,20 +816,26 @@ button.run-arrow-button {
 button.dzlmenubutton image {
   min-width: $medium-size - 6px;
 
-  &.arrow { min-width: $medium-size - 9px; }
+  &.arrow {
+    min-width: $medium-size - 9px;
+  }
 }
 
 button.dzlmenubuttonitem {
-  color: $text;
+  color: $on-surface;
   font-weight: normal;
 
-  &:disabled { color: $text-disabled; }
+  &:disabled {
+    color: disabled($on-surface);
+  }
 }
 
 idelayoutstackheader {
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
 
-  button:checked { color: $text; }
+  button:checked {
+    color: $on-surface;
+  }
 }
 
 // utilities stack switcher
@@ -706,9 +843,13 @@ ideeditorutilities > dzldockpaned > box > stackswitcher {
   padding: 8px 0;
   background-color: $background;
 
-  &:dir(ltr) { border-right: 1px solid $divider; }
+  &:dir(ltr) {
+    border-right: 1px solid divider($on-surface);
+  }
 
-  &:dir(rtl) { border-left: 1px solid $divider; }
+  &:dir(rtl) {
+    border-left: 1px solid divider($on-surface);
+  }
 
   button {
     border-radius: 0;
@@ -716,24 +857,28 @@ ideeditorutilities > dzldockpaned > box > stackswitcher {
     background-color: transparent;
 
     &:active {
-      background-image: radial-gradient(circle, rgba($primary, 0.7) 10%, transparent 0%);
+      background-image: radial-gradient(circle, rgba($primary, .7) 10%, transparent 0%);
     }
 
     &:checked {
       background-color: transparent;
-      color: $text;
+      color: $on-surface;
     }
 
     &:dir(ltr) {
       margin-right: -1px;
 
-      &:checked { box-shadow: inset -2px 0 $primary; }
+      &:checked {
+        box-shadow: inset -2px 0 $primary;
+      }
     }
 
     &:dir(rtl) {
       margin-left: -1px;
 
-      &:checked { box-shadow: inset 2px 0 $primary; }
+      &:checked {
+        box-shadow: inset 2px 0 $primary;
+      }
     }
   }
 }
@@ -747,18 +892,22 @@ popover.messagepopover {
   // padding: 0;
 
   list {
-    border: 1px solid $divider;
+    border: 1px solid divider($on-surface);
 
-    row:not(:last-child) { border-bottom: 1px solid $divider; }
+    row:not(:last-child) {
+      border-bottom: 1px solid divider($on-surface);
+    }
   }
 }
 
 // Workaround for hard-coded .title color
 dzlsuggestionpopover > revealer > box > elastic > scrolledwindow > viewport > list > row:selected {
-  // .title { color: @theme_selected_fg_color; }
+  .title {
+    // color: @theme_selected_fg_color;
+  }
 
   background-color: $primary;
-  color: on($primary);
+  color: $on-primary;
 }
 
 // Workaround for hard-coded button background
@@ -776,8 +925,9 @@ dzlsuggestionpopover > revealer > box > elastic > scrolledwindow > viewport > li
 
   // For some reason background-image doesn't work well with transition :(
   image {
-    transition: box-shadow $duration $ease-out,
-                background-color $ripple-fade-in-duration $ease-out;
+    transition:
+      box-shadow $duration $ease-out,
+      background-color $ripple-fade-in-duration $ease-out;
     min-width: $medium-size;
     min-height: $medium-size;
     border-radius: $circular-radius;
@@ -785,22 +935,22 @@ dzlsuggestionpopover > revealer > box > elastic > scrolledwindow > viewport > li
   }
 
   &:hover image {
-    box-shadow: inset 0 0 0 9999px $overlay-hover;
+    box-shadow: inset 0 0 0 9999px overlay("hover", $on-titlebar);
   }
 
   &:focus image {
-    box-shadow: inset 0 0 0 9999px $overlay-focus;
+    box-shadow: inset 0 0 0 9999px overlay("focus", $on-titlebar);
   }
 
   &:active image {
-    background-color: $overlay-active;
+    background-color: overlay("pressed", $on-titlebar);
   }
 }
 
+/**
+ * Photos
+ */
 
-/**********
- * Photos *
- **********/
 // based css:
 // https://gitlab.gnome.org/GNOME/gnome-photos/blob/master/data/Adwaita.css
 
@@ -809,7 +959,9 @@ GdMainIconView.content-view {
 
   // Make spinner visible on both dark and bright backgrounds w/o making
   // it look ugly/weird.
-  // &.cell:active { color: $text-disabled; }
+  &.cell:active {
+    // color: disabled($on-surface);
+  }
 }
 
 .documents-counter {
@@ -817,7 +969,7 @@ GdMainIconView.content-view {
   border-radius: $circular-radius;
   box-shadow: $shadow-z4;
   background-color: $primary;
-  color: on($primary);
+  color: $on-primary;
   font-weight: bold;
 }
 
@@ -828,7 +980,9 @@ GdMainIconView.content-view {
 .documents-scrolledwin.frame {
   border-style: none;
 
-  frame.content-view > border { border-style: none; }
+  frame.content-view > border {
+    border-style: none;
+  }
 }
 
 .photos-icon-bg {
@@ -848,63 +1002,74 @@ GdMainIconView.content-view {
 }
 
 button.photos-filter-preview {
-  color: $text;
+  color: $on-surface;
   font-weight: normal;
 
   &:checked {
     background-color: $overlay-selected;
-    color: $text;
+    color: $on-surface;
 
     image {
-      color: on(dark);
+      color: $on-dark;
       -gtk-icon-shadow: $text-shadow;
     }
   }
 }
 
 overlay grid.horizontal > revealer > scrolledwindow.frame {
-  &:dir(ltr) { border-style: none none none solid; }
-  &:dir(rtl) { border-style: none solid none none; }
+  &:dir(ltr) {
+    border-style: none none none solid;
+  }
+
+  &:dir(rtl) {
+    border-style: none solid none none;
+  }
 }
 
+/**
+ * Music
+ */
 
-/*********
- * Music *
- *********/
 // hard-coded css:
 // https://gitlab.gnome.org/GNOME/gnome-music/blob/master/data/application.css
 
 .side-panel:dir(ltr) {
   // border-width: 0 1px 0 0;
   border-style: solid;
-  border-color: $divider;
+  border-color: divider($on-surface);
 }
 
 .side-panel:dir(rtl) {
   // border-width: 0 0 0 1px;
   border-style: solid;
-  border-color: $divider;
+  border-color: divider($on-surface);
 }
 
 .side-panel .view {
   // background-color: mix(@theme_fg_color, @theme_bg_color, 0.9);
   background-image: image($base-alt);
 
-  &:hover { background-image: image(mix($text, $base-alt, percentage(0.08))); }
+  &:hover {
+    background-image: image(mix($on-surface, $base-alt, percentage(.08)));
+  }
 }
 
 .side-panel .view:selected {
   // background-color: mix(@theme_fg_color, @theme_bg_color, 0.5);
   background-image: image($primary);
 
-  &:hover { background-image: image(mix(on($primary), $primary, percentage(0.08))); }
+  &:hover {
+    background-image: image(mix($on-primary, $primary, percentage(.08)));
+  }
 }
 
 .songs-list {
   // box-shadow: inset 0 -1px shade(@borders, 1.30);
   // background-color: @theme_bg_color;
 
-  &:hover { background-image: image($overlay-hover); }
+  &:hover {
+    background-image: image(overlay("hover", $on-surface));
+  }
 }
 
 frame.documents-dropdown {
@@ -912,11 +1077,13 @@ frame.documents-dropdown {
 
   margin: 8px;
 
-  > border { border: none; }
+  > border {
+    border: none;
+  }
 }
 
 box.vertical > revealer > toolbar.search-bar {
-  border-bottom: 1px solid $divider;
+  border-bottom: 1px solid divider($on-surface);
   background-clip: border-box; // avoid black border
 
   button > widget {
@@ -925,10 +1092,10 @@ box.vertical > revealer > toolbar.search-bar {
   }
 }
 
+/**
+ * Terminal
+ */
 
-/************
- * Terminal *
- ************/
 terminal-window notebook > header > box {
   // Remove hard-coded margin around button(s)
   margin: -2px -2px -3px;
@@ -939,27 +1106,35 @@ terminal-window notebook > header > box {
   }
 }
 
+/**
+ * To Do
+ */
 
-/*********
- * To Do *
- *********/
 // less than 3.28
 task-list-view {
   taskrow {
     transition: $transition;
     margin: 0 -8px;
 
-    &:hover { transition: none; }
+    &:hover {
+      transition: none;
+    }
 
-    label { margin: 0 8px; }
+    label {
+      margin: 0 8px;
+    }
 
-    image.dim-label { min-width: 16px; }
+    image.dim-label {
+      min-width: 16px;
+    }
   }
 
   > box > revealer > box > button {
     margin: (12px * 2 - $medium-size) / 2;
 
-    .dim-label { color: inherit; }
+    .dim-label {
+      color: inherit;
+    }
   }
 }
 
@@ -969,76 +1144,96 @@ tasklistview {
     outline: none;
 
     entry {
-      &, &:focus, &:disabled { box-shadow: none; }
+      &,
+      &:focus,
+      &:disabled {
+        box-shadow: none;
+      }
     }
 
-    image.dim-label { min-width: 16px; }
+    image.dim-label {
+      min-width: 16px;
+    }
   }
 
   > box > revealer > box > button {
     margin: (12px * 2 - $medium-size) / 2;
 
-    .dim-label { color: inherit; }
+    .dim-label {
+      color: inherit;
+    }
   }
 }
 
+/**
+ * eog
+ */
 
-/*******
- * eog *
- *******/
 #eog-thumb-nav {
-  scrolledwindow { border-top: none; }
+  scrolledwindow.frame {
+    border-top: none;
+  }
 }
 
+/**
+ * Evolution
+ */
 
-/*************
- * Evolution *
- *************/
-frame.taskbar > border { border-style: solid none none; }
+frame.taskbar > border {
+  border-style: solid none none;
+}
 
-box.vertical > paned.horizontal notebook widget .frame { border-style: none; }
+box.vertical > paned.horizontal notebook widget .frame {
+  border-style: none;
+}
 
+/**
+ * gitg
+ */
 
-/********
- * gitg *
- ********/
-frame.commit-frame > border { border-style: solid none none; }
+frame.commit-frame > border {
+  border-style: solid none none;
+}
 
+/**
+ * Characters
+ */
 
-/**************
- * Characters *
- **************/
-box.dialog-vbox scrolledwindow.related { border: 1px solid $divider; }
+box.dialog-vbox scrolledwindow.related {
+  border: 1px solid divider($on-surface);
+}
 
-list.categories { background-image: image($base-alt); }
+list.categories {
+  background-image: image($base-alt);
+}
 
+/**
+ * Boxes
+ */
 
-/*********
- * Boxes *
- *********/
 .transparent-bg + stack overlay > label {
   min-height: 24px;
   padding: 0 4px;
   border-radius: $corner-radius;
   background-color: $scrim;
-  color: on($scrim);
+  color: $on-scrim;
 }
 
+/**
+ * Evince
+ */
 
-/**********
- * Evince *
- **********/
 // Color is needed for Evince to match hardcoded background-color,
 // since Documents app is also uses this style, background-color needs to be set accordingly.
 evview.content-view.view:selected {
   background-color: $primary;
-  color: on($primary);
+  color: $on-primary;
 }
 
+/**
+ * Polari
+ */
 
-/**********
- * Polari *
- **********/
 // hard-coded css:
 // https://gitlab.gnome.org/GNOME/polari/blob/master/data/resources/application.css
 
@@ -1048,10 +1243,10 @@ evview.content-view.view:selected {
   background-color: rgba($primary, .5);
 }
 
+/**
+ * Fractal
+ */
 
-/***********
- * Fractal *
- ***********/
 .message-input-area button {
   @extend %button-flat-activatable;
 }
