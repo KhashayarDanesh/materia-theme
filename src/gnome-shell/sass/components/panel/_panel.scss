@@ -18,7 +18,7 @@
   // the rounded outset corners
   .panel-corner {
     -panel-corner-radius: 4;
-    -panel-corner-background-color: transparent;
+    -panel-corner-background-color: $background;
     -panel-corner-border-width: 0;
     -panel-corner-border-color: transparent;
 
@@ -35,6 +35,8 @@
     color: hint(on($background));
     text-shadow: none;
     font-weight: bold;
+    margin-right: 4px;
+    margin-left: 4px;
 
     .system-status-icon,
     .app-menu-icon > StIcon,
@@ -81,8 +83,9 @@
 
     // status area icons
     .system-status-icon {
-      icon-size: 16px;
+      icon-size: 14px;
       padding: 0 4px;
+      margin
     }
 
     // app menu icon
@@ -115,8 +118,8 @@
     background-color: transparent;
 
     .panel-corner {
-      -panel-corner-radius: 0;
-      -panel-corner-background-color: transparent;
+      -panel-corner-radius: 4;
+      -panel-corner-background-color: $background;
       -panel-corner-border-color: transparent;
     }
 

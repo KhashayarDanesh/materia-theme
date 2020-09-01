@@ -6,6 +6,17 @@ Materia is a [Material Design](https://material.io) theme for GNOME/GTK based de
 
 It supports GTK 2, GTK 3, GNOME Shell, Budgie, Cinnamon, MATE, Unity, Xfce, LightDM, GDM, Chrome theme, etc.
 
+## Changes in Khashayar's Fork: 
+
+I've been using this theme for long and made changes to the top panel a lot, and then decided to add all the changes to a fork, so there we go: 
+
+- The icon size in top panel has been reduced to 14px from 16px
+- The font size in top panel has been reduced to 9pt
+- There's a left and right margin of 4px between each top bar element which makes it feel a little bit better 
+- I've added rounded corners to the top panel with a radius of 4.
+
+![materia-light-rounded](../images/Materia-light-rounded.png?raw=true)
+
 ## Previews
 
 ![widget-factory](../images/widget-factory.png?raw=true)
