@@ -17,6 +17,13 @@ I've been using this theme for long and made changes to the top panel a lot, and
 
 ![materia-light-rounded](../images/Materia-light-rounded.png?raw=true)
 
+## To Do list for further improvements in Khashayar's Fork: 
+
+- [ ] Fixing the out of proportion spacing in compact variant top panels
+- [ ] Adding a variant with white top Panel
+- [ ] Making the window edges a bit rounder
+- [ ] Adding Light-Aqua and Violet Color schemes 
+
 ## Previews
 
 ![widget-factory](../images/widget-factory.png?raw=true)
