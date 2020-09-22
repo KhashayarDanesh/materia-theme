@@ -18,7 +18,7 @@
   // the rounded outset corners
   .panel-corner {
     -panel-corner-radius: 4;
-    -panel-corner-background-color: $background;
+    -panel-corner-background-color: rgba(0, 0, 0, 0.7);
     -panel-corner-border-width: 0;
     -panel-corner-border-color: transparent;
 
@@ -35,8 +35,8 @@
     color: hint(on($background));
     text-shadow: none;
     font-weight: bold;
-    margin-right: 4px;
-    margin-left: 4px;
+    margin-right: 2px;
+    margin-left: 2px;
 
     .system-status-icon,
     .app-menu-icon > StIcon,
@@ -90,8 +90,8 @@
     // app menu icon
     .app-menu-icon {
       -st-icon-style: symbolic;
-      margin-left: 4px;
-      margin-right: 4px;
+      margin-left: 2px;
+      margin-right: 2px;
       // dimensions of the icon are hardcoded
     }
   }
@@ -173,7 +173,7 @@
 
 // App Menu
 #appMenu {
-  spacing: 4px;
+  spacing: 2px;
 
   @if $version <= 3.32 {
     spinner-image: url("process-working.svg");
