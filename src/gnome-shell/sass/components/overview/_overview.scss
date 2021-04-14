@@ -1,57 +1,90 @@
 /* OVERVIEW */
 
-#overview {
-  spacing: 24px;
-  background-color: transparent;
-  color: $on-dark;
+@use "../../../../theme";
+@use "../../../../theme-color";
+@use "../../gnome-shell";
+@use "../../typography";
+@use "../base/scrollbar";
 
-  StScrollBar {
-    @extend %scrollbar-on-dark;
+// Same as the ANIMATION_TIME in overview.js
+$transition-duration: 250ms;
+
+$color: theme-color.$system;
+$on-color: theme-color.$on-system;
+
+@if gnome-shell.$version < 40 {
+  $color: transparent;
+  $on-color: theme-color.$on-dark;
+}
+
+@if gnome-shell.$version >= 40 {
+  .controls-manager,
+  .secondary-monitor-workspaces {
+    spacing: 16px;
+  }
+
+  #overviewGroup {
+    background-color: $color;
+    color: $on-color;
+
+    StScrollBar {
+      @include scrollbar.color($on-color);
+    }
+  }
+} @else {
+  #overview {
+    spacing: 24px;
+    background-color: $color;
+    color: $on-color;
+
+    StScrollBar {
+      @include scrollbar.color($on-color);
+    }
+  }
+
+  .overview-controls {
+    padding-bottom: 32px;
   }
 }
 
-.overview-controls {
-  padding-bottom: 32px;
-}
-
-%overview-panel {
-  transition-duration: $duration-panel;
+@mixin panel {
+  transition-duration: $transition-duration;
   border: 0;
-  background-color: fill($on-dark);
-  color: $on-dark;
+  background-color: theme-color.fill($on-color);
+  color: $on-color;
 }
 
-%overview-status-text {
-  @include type(headline3);
-  color: disabled($on-dark);
+@mixin status-text {
+  @include typography.headline3;
+  color: theme-color.disabled($on-color);
 }
 
-%overview-item {
-  @extend %-overview-item;
+@mixin item {
+  @include _item;
 
   &:focus {
-    @extend %-overview-item-focus;
+    @include _item-focus;
   }
 
   &:hover,
   &:selected {
-    @extend %-overview-item-hover;
+    @include _item-hover;
   }
 
   &:active,
   &:checked {
-    @extend %-overview-item-active;
+    @include _item-active;
   }
 }
 
-%overview-icon {
+@mixin icon {
   .overview-icon {
-    @extend %-overview-item;
+    @include _item;
   }
 
   &:focus {
     .overview-icon {
-      @extend %-overview-item-focus;
+      @include _item-focus;
     }
   }
 
@@ -59,47 +92,48 @@
   &:hover,
   &:selected {
     .overview-icon {
-      @extend %-overview-item-hover;
+      @include _item-hover;
     }
   }
 
   &:active,
   &:checked {
     .overview-icon {
-      @extend %-overview-item-active;
+      @include _item-active;
     }
   }
 }
 
-%-overview-item {
+@mixin _item {
   padding: 6px;
   border: 0;
-  border-radius: $corner-radius;
+  border-radius: theme.$corner-radius;
   background-color: transparent;
   color: inherit;
   text-align: center;
-  transition-duration: $duration;
+  transition-duration: theme.$state-duration;
 }
 
-%-overview-item-focus {
+@mixin _item-focus {
   border-image: none;
   background-image: none;
-  background-color: overlay("focus", $on-dark);
+  background-color: theme-color.focus-overlay($on-color);
   color: inherit;
   transition-duration: 0ms;
 }
 
-%-overview-item-hover {
+@mixin _item-hover {
+  border: 0;
   border-image: none;
   background-image: none;
-  background-color: overlay("hover", $on-dark);
+  background-color: theme-color.hover-overlay($on-color);
   color: inherit;
   transition-duration: 0ms;
 }
 
-%-overview-item-active {
+@mixin _item-active {
   box-shadow: none;
-  background-color: overlay("pressed", $on-dark);
+  background-color: theme-color.pressed-overlay($on-color);
   color: inherit;
-  transition-duration: $duration-ripple;
+  transition-duration: theme.$ripple-duration;
 }

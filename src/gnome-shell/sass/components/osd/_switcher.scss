@@ -1,5 +1,10 @@
 /* App Switcher */
 
+@use "../../../../theme";
+@use "../../../../theme-color";
+@use "../../typography";
+@use "osd";
+
 .switcher-popup {
   padding: 8px;
   spacing: 16px;
@@ -7,28 +12,28 @@
 
 // switcher onscreen panel
 .switcher-list {
-  @extend %osd-panel;
+  @include osd.panel;
 
   .switcher-list-item-container {
     spacing: 8px;
   }
 
   .item-box {
-    transition-duration: $duration;
+    transition-duration: theme.$state-duration;
     padding: 8px;
     border: 0;
-    border-radius: $corner-radius;
+    border-radius: theme.$corner-radius;
 
     &:outlined {
       padding: 8px;
       border: 0;
       box-shadow: none;
-      background-color: overlay("activated", $on-surface);
+      background-color: theme-color.activated-overlay(theme-color.$on-surface);
       color: inherit;
     }
 
     &:selected {
-      background-color: $overlay-selected;
+      background-color: theme-color.$selected-overlay;
       color: inherit;
     }
   }
@@ -45,17 +50,17 @@
 
   .separator {
     width: 1px;
-    background: divider($on-surface);
+    background: theme-color.divider(theme-color.$on-surface);
   }
 }
 
 .switcher-arrow {
-  transition-duration: $duration;
+  transition-duration: theme.$state-duration;
   border-color: transparent;
-  color: hint($on-surface);
+  color: theme-color.hint(theme-color.$on-surface);
 
   &:highlighted {
-    color: $on-surface;
+    color: theme-color.$on-surface;
   }
 }
 
@@ -63,10 +68,10 @@
 .input-source-switcher-symbol {
   width: 96px;
   height: 96px;
-  @include type(headline3);
+  @include typography.headline3;
 }
 
 // Window cycler highlight
 .cycler-highlight {
-  border: 4px solid $primary;
+  border: 4px solid theme-color.$primary;
 }

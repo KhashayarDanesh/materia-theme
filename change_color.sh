@@ -47,6 +47,10 @@ while [[ "$#" -gt 0 ]]; do
       OPTION_GTK2_HIDPI="$2"
       shift
       ;;
+    -i|--inkscape)
+      OPTION_FORCE_INKSCAPE="$2"
+      shift
+      ;;
     *)
       if [[ "$1" == -* ]] || [[ "${THEME-}" ]]; then
         echo "unknown option $1"
@@ -64,17 +68,17 @@ if [[ -z "${THEME:-}" ]]; then
 fi
 
 PATHLIST=(
-  './src/_colors.scss'
+  './src/_theme-color.scss'
   './src/chrome'
   './src/cinnamon'
   './src/cinnamon/assets'
   './src/gnome-shell'
-  './src/gtk/assets.svg'
   './src/gtk-2.0/assets.svg'
   './src/gtk-2.0/assets-dark.svg'
   './src/gtk-2.0/gtkrc'
   './src/gtk-2.0/gtkrc-dark'
   './src/gtk-2.0/gtkrc-light'
+  './src/gtk-3.0/assets.svg'
   './src/metacity-1'
   './src/unity'
   './src/xfwm4'
@@ -91,6 +95,7 @@ for FILEPATH in "${PATHLIST[@]}"; do
 done
 
 OPTION_GTK2_HIDPI=$(tr '[:upper:]' '[:lower:]' <<< "${OPTION_GTK2_HIDPI-False}")
+OPTION_FORCE_INKSCAPE=$(tr '[:upper:]' '[:lower:]' <<< "${OPTION_FORCE_INKSCAPE-True}")
 
 
 if [[ "$THEME" == */* ]] || [[ "$THEME" == *.* ]]; then
@@ -163,8 +168,8 @@ if [[ -z "$MATERIA_COLOR_VARIANT" ]]; then
     echo "== Dark background color detected. Setting color variant to dark."
     MATERIA_COLOR_VARIANT="dark"
   elif is_dark "$HDR_BG"; then
-    echo "== Dark headerbar background color detected. Setting color variant to standard."
-    MATERIA_COLOR_VARIANT="standard"
+    echo "== Dark headerbar background color detected. Setting color variant to default."
+    MATERIA_COLOR_VARIANT="default"
   else
     echo "== Light background color detected. Setting color variant to light."
     MATERIA_COLOR_VARIANT="light"
@@ -180,19 +185,18 @@ for FILEPATH in "${PATHLIST[@]}"; do
       -e '/color-surface/{n;s/#ffffff/%MATERIA_SURFACE%/g}' \
       -e '/color-base/{n;s/#ffffff/%MATERIA_VIEW%/g}' \
       -e 's/#8ab4f8/%SEL_BG%/g' \
-      -e 's/#1a73e8/%SEL_BG%/g' \
+      -e 's/#1967d2/%SEL_BG%/g' \
       -e 's/#000000/%FG%/g' \
       -e 's/#212121/%FG%/g' \
-      -e 's/#f2f2f2/%BG%/g' \
+      -e 's/#f9f9f9/%BG%/g' \
       -e 's/#ffffff/%MATERIA_SURFACE%/g' \
       -e 's/#ffffff/%MATERIA_VIEW%/g' \
-      -e 's/#fafafa/%INACTIVE_MATERIA_VIEW%/g' \
-      -e 's/#383838/%HDR_BG%/g' \
+      -e 's/#424242/%HDR_BG%/g' \
       -e 's/#303030/%HDR_BG2%/g' \
       -e 's/#ffffff/%HDR_FG%/g' \
       -e 's/#c1c1c1/%INACTIVE_FG%/g' \
-      -e 's/#e0e0e0/%HDR_BG%/g' \
-      -e 's/#d6d6d6/%HDR_BG2%/g' \
+      -e 's/#f0f0f0/%HDR_BG%/g' \
+      -e 's/#ebebeb/%HDR_BG2%/g' \
       -e 's/#1d1d1d/%HDR_FG%/g' \
       -e 's/#565656/%INACTIVE_FG%/g' \
       -e 's/Materia/%OUTPUT_THEME_NAME%/g' \
@@ -202,12 +206,11 @@ for FILEPATH in "${PATHLIST[@]}"; do
       -e 's/#8ab4f8/%SEL_BG%/g' \
       -e 's/#ffffff/%FG%/g' \
       -e 's/#eeeeee/%FG%/g' \
-      -e 's/#181818/%BG%/g' \
-      -e 's/#343434/%MATERIA_SURFACE%/g' \
-      -e 's/#242424/%MATERIA_VIEW%/g' \
-      -e 's/#242424/%INACTIVE_MATERIA_VIEW%/g' \
-      -e 's/#2d2d2d/%HDR_BG%/g' \
-      -e 's/#242424/%HDR_BG2%/g' \
+      -e 's/#121212/%BG%/g' \
+      -e 's/#2e2e2e/%MATERIA_SURFACE%/g' \
+      -e 's/#1e1e1e/%MATERIA_VIEW%/g' \
+      -e 's/#272727/%HDR_BG%/g' \
+      -e 's/#1e1e1e/%HDR_BG2%/g' \
       -e 's/#e4e4e4/%HDR_FG%/g' \
       -e 's/#a7a7a7/%INACTIVE_FG%/g' \
       -e 's/Materia/%OUTPUT_THEME_NAME%/g' \
@@ -219,13 +222,13 @@ done
       #-e 's/%SPACING%/'"$SPACING"'/g' \
 
 # shellcheck disable=SC2016
-sed -i -e 's/^$corner-radius: .px/$corner-radius: '"$ROUNDNESS"'px/g' ./src/_variables.scss
+sed -i -e 's/^$corner-radius: .px/$corner-radius: '"$ROUNDNESS"'px/g' ./src/_theme.scss
 
 if [[ "${DEBUG:-}" ]]; then
   echo "You can debug TEMP DIR: $tempdir, press [Enter] when finished"; read -r
 fi
 
-mv ./src/_colors.scss.template ./src/_colors.scss
+mv ./src/_theme-color.template.scss ./src/_theme-color.scss
 
 echo "== Filling the template with the new colorscheme..."
 for FILEPATH in "${PATHLIST[@]}"; do
@@ -256,17 +259,17 @@ for FILEPATH in "${PATHLIST[@]}"; do
     {} \; ;
 done
 
-if [[ "$MATERIA_COLOR_VARIANT" == "standard" ]]; then
-  COLOR_VARIANTS=","
-  COLOR_VARIANT="standard"
+if [[ "$MATERIA_COLOR_VARIANT" == "default" ]]; then
+  COLOR_VARIANT="default"
+  COLOR_SUFFIX=""
 fi
 if [[ "$MATERIA_COLOR_VARIANT" == "light" ]]; then
-  COLOR_VARIANTS="-light"
   COLOR_VARIANT="light"
+  COLOR_SUFFIX="-light"
 fi
 if [[ "$MATERIA_COLOR_VARIANT" == "dark" ]]; then
-  COLOR_VARIANTS="-dark"
   COLOR_VARIANT="dark"
+  COLOR_SUFFIX="-dark"
 fi
 if [[ "$OPTION_GTK2_HIDPI" == "true" ]]; then
   mv ./src/gtk-2.0/main.rc.hidpi ./src/gtk-2.0/main.rc
@@ -279,33 +282,32 @@ if [[ "$EXPORT_QT5CT" = 1 ]]; then
 fi
 
 if [[ "$MATERIA_STYLE_COMPACT" == "true" ]]; then
-  SIZE_VARIANTS="-compact"
   SIZE_VARIANT="compact"
+  SIZE_SUFFIX="-compact"
 else
-  SIZE_VARIANTS=","
-  SIZE_VARIANT="standard"
+  SIZE_VARIANT="default"
+  SIZE_SUFFIX=""
 fi
 
 # NOTE we use the functions we already have in render-assets.sh
 echo "== Rendering GTK 2 assets..."
 if [[ "$MATERIA_COLOR_VARIANT" != "dark" ]]; then
-  GTK2_HIDPI="$OPTION_GTK2_HIDPI" ./render-assets.sh gtk2-light
+  FORCE_INKSCAPE="$OPTION_FORCE_INKSCAPE" GTK2_HIDPI="$OPTION_GTK2_HIDPI" ./render-assets.sh gtk2-light
 else
-  GTK2_HIDPI="$OPTION_GTK2_HIDPI" ./render-assets.sh gtk2-dark
+  FORCE_INKSCAPE="$OPTION_FORCE_INKSCAPE" GTK2_HIDPI="$OPTION_GTK2_HIDPI" ./render-assets.sh gtk2-dark
 fi
 
 echo "== Rendering GTK 3 assets..."
-./render-assets.sh gtk
+FORCE_INKSCAPE="$OPTION_FORCE_INKSCAPE" ./render-assets.sh gtk
 
-./install.sh --dest "$TARGET_DIR" --name "${OUTPUT_THEME_NAME/\//-}" --color "$COLOR_VARIANT" --size "$SIZE_VARIANT"
-
-GENERATED_PATH="$DEST_PATH$(tr -d ',' <<< "$COLOR_VARIANTS")$(tr -d ',' <<< "$SIZE_VARIANTS")"
-if [[ "$GENERATED_PATH" != "$DEST_PATH" ]]; then
-  if [[ -d "$DEST_PATH" ]]; then
-    rm -r "$DEST_PATH"
-  fi
-  mv "$GENERATED_PATH" "$DEST_PATH"
+meson _build -Dprefix="$tempdir" -Dcolors="$COLOR_VARIANT" -Dsizes="$SIZE_VARIANT"
+meson install -C _build
+GENERATED_PATH="$tempdir/share/themes/Materia$COLOR_SUFFIX$SIZE_SUFFIX"
+if [[ -d "$DEST_PATH" ]]; then
+	rm -r "$DEST_PATH"
 fi
+mv "$GENERATED_PATH" "$DEST_PATH"
+
 
 echo
 echo "== SUCCESS"

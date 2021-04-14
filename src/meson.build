@@ -4,7 +4,7 @@ foreach theme: themes
 
   index_theme = configure_file(
     input: 'index.theme.in',
-    output: 'index.@0@.theme'.format(theme['name']),
+    output: '@0@.index.theme'.format(theme['name']),
     configuration: index_theme_conf,
   )
 
@@ -18,8 +18,9 @@ endforeach
 subdir('chrome')
 subdir('cinnamon')
 subdir('gnome-shell')
-subdir('gtk')
 subdir('gtk-2.0')
+subdir('gtk-3.0')
+subdir('gtk-4.0')
 subdir('metacity-1')
 subdir('plank')
 subdir('unity')

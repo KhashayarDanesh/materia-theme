@@ -1,11 +1,15 @@
 /* Workspace Switcher */
 
+@use "../../../../theme";
+@use "../../../../theme-color";
+@use "osd";
+
 .workspace-switcher-group {
   padding: 8px;
 }
 
 .workspace-switcher-container {
-  @extend %osd-panel;
+  @include osd.panel;
 }
 
 .workspace-switcher {
@@ -19,8 +23,8 @@
 .ws-switcher-box {
   height: 48px;
   border: 0;
-  border-radius: $corner-radius;
-  background-color: disabled-stroke($on-surface);
+  border-radius: theme.$corner-radius;
+  background-color: theme-color.disabled-stroke(theme-color.$on-surface);
   background-size: 0;
 }
 
@@ -31,8 +35,8 @@
 .ws-switcher-active-right {
   height: 48px;
   border: 0;
-  border-radius: $corner-radius;
-  background-color: $primary;
+  border-radius: theme.$corner-radius;
+  background-color: theme-color.$primary;
   background-size: 0;
   color: inherit;
 }

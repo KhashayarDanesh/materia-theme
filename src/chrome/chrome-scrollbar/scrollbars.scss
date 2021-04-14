@@ -1,5 +1,2 @@
-$variant: 'light';
-$topbar: 'dark';
-
-@import '../../colors';
-@import '../sass/scrollbars';
+@use "../../theme" with ($dark-theme: false);
+@use "../sass/scrollbars";

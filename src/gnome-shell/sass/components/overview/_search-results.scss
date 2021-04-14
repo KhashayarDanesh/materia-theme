@@ -1,7 +1,13 @@
 /* Search */
 
+@use "../../../../theme-color";
+@use "../../gnome-shell";
+@use "../../typography";
+@use "overview";
+@use "app-grid";
+
 // search overview container
-$searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchResultsBin");
+$searchResultsContent: if(gnome-shell.$version >= 3.34, "#searchResultsContent", "#searchResultsBin");
 
 #{$searchResultsContent} {
   max-width: 1024px;
@@ -21,7 +27,7 @@ $searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchRes
   // separator
   .search-section-separator {
     height: 1px;
-    background-color: divider($on-dark);
+    background-color: theme-color.divider(overview.$on-color);
   }
 
   &:last-child .search-section-separator {
@@ -46,7 +52,13 @@ $searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchRes
 
 // "no results" text
 .search-statustext {
-  @extend %overview-status-text;
+  @include overview.status-text;
+}
+
+@if gnome-shell.$version >= 3.38 {
+  .grid-search-results {
+    spacing: 32px;
+  }
 }
 
 // Search results with icons
@@ -56,7 +68,7 @@ $searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchRes
 
 // search result provider
 .search-provider-icon {
-  @extend %overview-item;
+  @include overview.item;
 
   // content
   .list-search-provider-content {
@@ -66,7 +78,7 @@ $searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchRes
     .list-search-provider-details {
       width: 150px;
       margin-top: 0;
-      color: hint($on-dark);
+      color: theme-color.hint(overview.$on-color);
       // font-weight: bold;
     }
   }
@@ -79,7 +91,7 @@ $searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchRes
 
 // search result listitem
 .list-search-result {
-  @extend %overview-item;
+  @include overview.item;
 
   // content
   .list-search-result-content {
@@ -90,11 +102,11 @@ $searchResultsContent: if($version >= 3.34, "#searchResultsContent", "#searchRes
   .list-search-result-title {
     spacing: 12px;
     color: inherit;
-    @include type(subtitle1);
+    @include typography.subtitle1;
   }
 
   // list item description
   .list-search-result-description {
-    color: hint($on-dark);
+    color: theme-color.hint(overview.$on-color);
   }
 }
