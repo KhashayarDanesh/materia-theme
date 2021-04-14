@@ -181,11 +181,6 @@ $button-hpadding: 12px;
     background-color: transparent;
 
     .panel-corner {
-<<<<<<< HEAD
-      -panel-corner-radius: 4;
-      -panel-corner-background-color: $background;
-      -panel-corner-border-color: transparent;
-=======
       @if gnome-shell.$version >= 40 {
         -panel-corner-opacity: 0;
       } @else {
@@ -193,7 +188,6 @@ $button-hpadding: 12px;
         -panel-corner-background-color: transparent;
         -panel-corner-border-color: transparent;
       }
->>>>>>> upstream/master
     }
 
     .panel-button {
