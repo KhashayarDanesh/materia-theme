@@ -127,11 +127,11 @@ $button-hpadding: 12px;
 
     // status area icons
     .system-status-icon {
-      icon-size: 16px;
-      padding: 0 8px;
+      icon-size: 14px;
+      padding: 0 4px;
 
       @if gnome-shell.$version >= 40 {
-        margin: 0 4px;
+        margin: 0 2px;
       }
     }
 
@@ -155,19 +155,19 @@ $button-hpadding: 12px;
 
     @if gnome-shell.$version >= 40 {
       &#panelActivities {
-        -natural-hpadding: $button-hpadding;
+        -natural-hpadding: 6px;
       }
     }
   }
 
   .panel-status-indicators-box,
   .panel-status-menu-box {
-    spacing: 2px;
+    spacing: 1px;
   }
 
   // spacing between power icon and (optional) percentage label
   .power-status.panel-status-indicators-box {
-    spacing: 0;
+    spacing: 1;
   }
 
   // indicator for active
@@ -182,9 +182,9 @@ $button-hpadding: 12px;
 
     .panel-corner {
       @if gnome-shell.$version >= 40 {
-        -panel-corner-opacity: 0;
+        -panel-corner-opacity: 100;
       } @else {
-        -panel-corner-radius: 0;
+        -panel-corner-radius: 4px;
         -panel-corner-background-color: transparent;
         -panel-corner-border-color: transparent;
       }
